@@ -1,0 +1,20 @@
+[tasks]
+prove
+cover
+
+[options]
+prove: mode bmc
+cover: mode cover
+
+[engines]
+smtbmc
+
+[script]
+read -define FORMAL
+read -sv hashmap.v
+read -sv s1.v
+prep -top s1
+
+[files]
+../common/hashmap.v
+s1.v

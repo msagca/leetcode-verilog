@@ -1,2 +1,3 @@
-# leetcode-verilog
-Solutions to problems on LeetCode in Verilog
+# LeetCode Verilog
+
+Verilog solutions to LeetCode problems
