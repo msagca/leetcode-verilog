@@ -3,7 +3,7 @@ prove
 cover
 
 [options]
-prove: mode bmc
+prove: mode prove
 cover: mode cover
 
 [engines]
@@ -12,6 +12,7 @@ smtbmc
 [script]
 read -define FORMAL
 read -sv hashmap.v
+read -define TOP
 read -sv s1.v
 prep -top s1
 

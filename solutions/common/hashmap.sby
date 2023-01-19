@@ -11,6 +11,7 @@ smtbmc
 
 [script]
 read -define FORMAL
+read -define TOP
 read -sv hashmap.v
 prep -top hashmap
 
