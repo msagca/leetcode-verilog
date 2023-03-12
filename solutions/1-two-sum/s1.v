@@ -93,7 +93,7 @@ module s1 #(
   always @* assume (target == _target1);
   always @(posedge clk) if (_past_valid && index_valid && !last_received) assume ($stable(_state));
   always @(posedge clk) if (_past_valid && $stable(number)) assume ($stable(number_last));
-  always @(posedge clk) if (!number_valid) assume (!number_last);
+  always @* if (!number_valid) assume (!number_last);
   always @* if (number_index == ARRAY_SIZE - 1) assume (number_last);
   always @* if (!index_valid) assume (_state < 2);
   always @*

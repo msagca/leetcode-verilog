@@ -10,8 +10,8 @@ cover: mode cover
 smtbmc
 
 [script]
-read -define FORMAL
 read -sv hashmap.v
+read -define FORMAL
 read -define TOP
 read -sv s1.v
 prep -top s1
