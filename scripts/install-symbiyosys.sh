@@ -1,9 +1,9 @@
 #!/usr/bin/bash
 
-REINSTALL=false
-while getopts r FLAG; do
+UPDATE=false
+while getopts u FLAG; do
   case "$FLAG" in
-    r) REINSTALL=true ;;
+    u) UPDATE=true ;;
     *) ;;
   esac
 done
@@ -18,12 +18,16 @@ if command -v apt &>/dev/null; then
   gawk \
   git \
   graphviz \
+  libboost-system-dev \
+  libboost-python-dev \
+  libboost-filesystem-dev \
   libffi-dev \
   libreadline-dev \
   pkg-config \
   python3 \
   tcl-dev \
-  xdot
+  xdot \
+  zlib1g-dev
 fi
 
 clone_cd () {
@@ -38,22 +42,23 @@ clone_cd () {
 FAILED_TO_INSTALL=()
 
 # yosys
-if ! command -v yosys &>/dev/null || $REINSTALL; then
+if ! command -v yosys &>/dev/null || $UPDATE; then
   clone_cd 'https://github.com/YosysHQ/yosys' \
+  && make config-gcc \
   && make -j "$(nproc)" \
   && sudo make install \
   || FAILED_TO_INSTALL+=("yosys")
 fi
 
 # symbiyosys
-if ! command -v sby &>/dev/null || $REINSTALL; then
+if ! command -v sby &>/dev/null || $UPDATE; then
   clone_cd 'https://github.com/YosysHQ/sby' \
   && sudo make install \
-  || FAILED_TO_INSTALL+=("SymbiYosys")
+  || FAILED_TO_INSTALL+=("symbiyosys")
 fi
 
 # boolector
-if ! command -v boolector &>/dev/null || $REINSTALL; then
+if ! command -v boolector &>/dev/null || $UPDATE; then
   clone_cd 'https://github.com/boolector/boolector' \
   && ./contrib/setup-btor2tools.sh \
   && ./contrib/setup-lingeling.sh \
@@ -64,14 +69,14 @@ if ! command -v boolector &>/dev/null || $REINSTALL; then
   || FAILED_TO_INSTALL+=("boolector")
 fi
 
-# yices2
-if ! command -v yices &>/dev/null || $REINSTALL; then
+# yices
+if ! command -v yices &>/dev/null || $UPDATE; then
   clone_cd 'https://github.com/SRI-CSL/yices2' \
   && autoconf \
   && ./configure \
   && make -j "$(nproc)" \
   && sudo make install \
-  || FAILED_TO_INSTALL+=("yices2")
+  || FAILED_TO_INSTALL+=("yices")
 fi
 
 for TOOL_NAME in "${FAILED_TO_INSTALL[@]}"; do
