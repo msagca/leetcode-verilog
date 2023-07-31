@@ -26,7 +26,7 @@ module hashmap #(
   assign write_ptr = hash(write_key);
   always @(posedge clk)
     if (rst || clear_cache) for (i = 0; i < CACHE_SIZE; i = i + 1) valid_mem[i] <= 0;
-    else valid_mem[write_ptr] <= write_request;
+    else if(write_request) valid_mem[write_ptr] <= 1;
   always @(posedge clk)
     if (write_request)
       if (OVERWRITE == 1 || !valid_mem[write_ptr]) begin
