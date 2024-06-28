@@ -94,10 +94,10 @@ module s1
         _state <= _state_next;
   always @*
     case (_state)
-    _STATE_FIRST:
-      _state_next = _STATE_SECOND;
-    default:
-      _state_next = _STATE_LAST;
+      _STATE_FIRST:
+        _state_next = _STATE_SECOND;
+      default:
+        _state_next = _STATE_LAST;
     endcase
   always @(posedge clk)
     if (_state == _STATE_FIRST)
@@ -125,12 +125,12 @@ module s1
       assume (_state < 2);
   always @*
     case (_state)
-    _STATE_FIRST:
-      assume (number == _number2);
-    _STATE_SECOND:
-      assume (number == _number1);
-    default:
-      assume (number != _number1 && number != _number2);
+      _STATE_FIRST:
+        assume (number == _number2);
+      _STATE_SECOND:
+        assume (number == _number1);
+      default:
+        assume (number != _number1 && number != _number2);
     endcase
   // verify that the indices are correct if a solution has been found
   always @*
