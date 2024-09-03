@@ -17,6 +17,7 @@ if command -v apt &>/dev/null; then
 		flex \
 		gawk \
 		git \
+		gperf \
 		graphviz \
 		libboost-system-dev \
 		libboost-python-dev \
@@ -44,6 +45,7 @@ FAILED_TO_INSTALL=()
 # yosys
 if ! command -v yosys &>/dev/null || $UPDATE; then
 	clone_cd 'https://github.com/YosysHQ/yosys' &&
+		git submodule update --init &&
 		make config-gcc &&
 		make -j "$(nproc)" &&
 		sudo make install ||
